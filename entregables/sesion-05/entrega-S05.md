@@ -175,3 +175,11 @@ He leído el README, la carpeta `docs/`, OpenSpec, `AGENTS.md`, los controllers 
 1. **README de arranque** — Los pasos para levantar backend y frontend son claros y la tabla de endpoints ayuda.
 2. **AGENTS.md** — Resume bien las reglas del proyecto y ayuda a no liarse con el código.
 3. **OpenSpec de auth** — La spec de autenticación coincide con lo que hace el código; podría servir de modelo para el resto.
+
+### Paso 7 — Exploración rápida de tres formatos
+
+He mirado un poco cada formato (unos 5 minutos cada uno, como pide el ejercicio). Para cada uno, una línea sobre qué aporta que no aportan unas notas sueltas en Markdown:
+
+- **Diagrama C4** ([c4model.com](https://c4model.com)): me ayuda a ver el sistema por capas (contexto, contenedores, componentes…) sin tener que leer todo el código.
+- **ADR** ([joelparkerhenderson/architecture-decision-record](https://github.com/joelparkerhenderson/architecture-decision-record)): deja escrito por qué se tomó una decisión técnica y qué otras opciones se descartaron.
+- **OpenAPI** ([Stripe API](https://docs.stripe.com/api)): es como un contrato de la API (rutas, parámetros, respuestas) que puedes consultar sin abrir los controllers.
