@@ -5,8 +5,24 @@ import { UserTransformer } from '#transformers/user_transformer'
 
 export default class NewAccountsController {
   /**
-   * POST /account/register
-   * Crea una cuenta nueva y devuelve el usuario + un access token.
+   * @store
+   * @summary Registrar cuenta
+   * @requestBody { "email": "user@example.com", "password": "secret123", "fullName": "Ada Lovelace" }
+   * @responseBody 201 - { "user": {}, "token": "oat_..." } - Cuenta creada
+   * @responseBody 422 - { "errors": [{ "message": "...", "rule": "..." }] } - Email duplicado / inválido o password corta
+   */
+  /**
+   * `POST /api/v1/account/register`
+   *
+   * Crea una cuenta nueva a partir de `email` + `password` (y `fullName`
+   * opcional) y responde con el usuario creado más un access token nuevo.
+   *
+   * @throws {E_VALIDATION_ERROR} 422 si el email ya existe, tiene formato
+   * inválido, o la password mide menos de 8 caracteres (ver
+   * `signupValidator`).
+   * @remarks El `password` se hashea con scrypt (`AuthFinder` en
+   * `app/models/user.ts`) antes de persistirse; nunca se expone en la
+   * respuesta (`UserTransformer` lo excluye).
    */
   async store({ request, response }: HttpContext) {
     const data = await request.validateUsing(signupValidator)

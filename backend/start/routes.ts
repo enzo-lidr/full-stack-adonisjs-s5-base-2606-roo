@@ -1,5 +1,7 @@
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
+import AutoSwagger from 'adonis-autoswagger'
+import swaggerConfig from '#config/swagger'
 
 const NewAccountsController = () => import('#controllers/new_accounts_controller')
 const AccessTokensController = () => import('#controllers/access_tokens_controller')
@@ -9,6 +11,16 @@ const UsersController = () => import('#controllers/users_controller')
 
 router.get('/', async () => {
   return { app: 'full-stack-adonisjs-master', status: 'running' }
+})
+
+// Spec OpenAPI 3.0 generada desde las rutas + validators VineJS reales
+router.get('/openapi', async () => {
+  return AutoSwagger.default.docs(router.toJSON(), swaggerConfig)
+})
+
+// UI de documentación (Scalar) servida sobre la spec de arriba
+router.get('/docs', async () => {
+  return AutoSwagger.default.scalar('/openapi')
 })
 
 /*

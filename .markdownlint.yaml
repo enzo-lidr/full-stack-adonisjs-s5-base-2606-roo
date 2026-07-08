@@ -1,0 +1,12 @@
+# Config de markdownlint-cli2 para este repo.
+# Desactivamos reglas que no aplican a cómo escribimos docs aquí; el resto
+# queda en default (~40 reglas de estructura de markdownlint).
+default: true
+
+MD013: false # line-length — las tablas y bloques de código son largos a propósito
+MD033: false # no-inline-html — los diagramas Mermaid y algunos badges usan HTML inline
+MD041: false # first-line-heading — algunos .md empiezan con una nota/blockquote, no un H1
+MD060: false # table-column-style — regla muy reciente y muy estricta con el espaciado de "|"; no vale la pena reformatear todas las tablas existentes por esto
+
+MD024:
+  siblings_only: true # permite headings duplicados si están en secciones distintas (ej. "Escenario 1" repetido por historia)

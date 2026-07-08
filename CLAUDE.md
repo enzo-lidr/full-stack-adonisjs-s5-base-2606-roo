@@ -24,10 +24,12 @@ conductor del máster AI4Devs. Monorepo con dos apps independientes:
 | Routing FE | React Router |
 | Estilos | Tailwind CSS v4 + shadcn/ui |
 | SDD | OpenSpec (`/opsx:*`) |
+| API docs | `adonis-autoswagger` + Scalar (`GET /openapi`, `GET /docs`) — generado desde las rutas reales |
 
 ## Comandos
 
 ### Backend (`cd backend`)
+
 - `npm run dev` — servidor con HMR en `http://localhost:3333`
 - `npm run migration:run` — aplica migraciones
 - `npm run migration:fresh` — recrea la BD desde cero
@@ -35,6 +37,7 @@ conductor del máster AI4Devs. Monorepo con dos apps independientes:
 - `node ace list:routes` — inspecciona el árbol de rutas
 
 ### Frontend (`cd frontend`)
+
 - `npm run dev` — Vite dev server en `http://localhost:5173`
 - `npm run build` — build de producción
 
@@ -52,6 +55,32 @@ conductor del máster AI4Devs. Monorepo con dos apps independientes:
 
 Flujo spec-driven con los slash commands `/opsx:propose`, `/opsx:apply`,
 `/opsx:archive`. La configuración vive en `openspec/config.yaml`.
+
+> ⚠️ Al tocar una ruta/controller, actualiza también su requirement en
+> `openspec/specs/`. La auditoría de S5 (`entregables/sesion-05/`) encontró
+> una spec que documentaba un endpoint (`/users/active`) que el código no
+> implementa — nadie lo valida automáticamente todavía.
+
+## Arquitectura y decisiones
+
+- Diagramas de arquitectura (contexto C4 + secuencia de login) en
+  [`README.md`](./README.md#arquitectura), formato Mermaid.
+- Decisiones técnicas significativas se registran como ADR en `docs/adr/`
+  (formato MADR: contexto, opciones consideradas, decisión, consecuencias).
+  No documentes ahí decisiones triviales — solo las que un developer nuevo
+  cuestionaría ("¿por qué se hizo así?").
+
+## Librerías del proyecto
+
+Si tienes Context7 MCP conectado, úsalo al generar código con AdonisJS 7,
+Lucid ORM, VineJS o React 19 (añade `use context7` al prompt). AdonisJS 7 es
+muy reciente; sin Context7, un agente de IA puede generar código válido para
+AdonisJS 6 que no funciona en la v7.
+
+> Limitación conocida: la precisión de Context7 baja en queries que cruzan
+> varias librerías a la vez (ej. "cómo interactúan VineJS y Lucid"). Si la
+> pregunta es de integración compleja, prefiere un turno por librería en vez
+> de mezclarlas en el mismo prompt.
 
 ## No hacer
 

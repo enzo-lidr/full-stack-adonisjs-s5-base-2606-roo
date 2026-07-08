@@ -3,7 +3,7 @@
 Starter kit full-stack con autenticación por **access tokens**. Repo hilo conductor
 del máster **AI4Devs** (LIDR). Monorepo con backend y frontend independientes.
 
-```
+```text
 full-stack-adonisjs-master/
 ├── backend/      AdonisJS 7 + Lucid + SQLite + VineJS + @adonisjs/auth
 ├── frontend/     React 19 + Vite + React Router + Tailwind v4 + shadcn/ui
@@ -56,11 +56,50 @@ Abre `http://localhost:5173`, regístrate, entra al dashboard y cierra sesión.
 
 > El endpoint `GET /api/v1/users/active` se implementa en vivo en la Sesión 3.
 
+## Arquitectura
+
+Diagrama de contexto (C4 básico):
+
+```mermaid
+graph LR
+    User["👤 Usuario\n[Persona]"]
+    FE["Frontend React\n[SPA\nReact 19 + Vite]"]
+    BE["Backend AdonisJS 7\n[API REST /api/v1\nTypeScript + Lucid]"]
+    DB[("SQLite\n[better-sqlite3]")]
+
+    User -->|"Navega en el navegador"| FE
+    FE -->|"HTTP/JSON · Bearer oat_*"| BE
+    BE -->|"SQL vía Lucid ORM"| DB
+```
+
+> El PRD (`docs/PRD.md`) describe además una integración con Google Calendar;
+> este starter todavía no la implementa, por eso no aparece en el diagrama.
+> Reflejar solo lo que existe en el código evita el mismo problema de
+> divergencia spec↔código detectado en la auditoría de `entregables/sesion-05/`.
+
+Flujo de login (verificado contra `access_tokens_controller.ts` y `app/models/user.ts`):
+
+```mermaid
+sequenceDiagram
+    participant C as Cliente React
+    participant A as AdonisJS API (/api/v1/account/login)
+    participant DB as SQLite (users / auth_access_tokens)
+
+    C->>A: POST /api/v1/account/login {email, password}
+    A->>DB: SELECT user WHERE email = ?
+    DB-->>A: User record
+    A->>A: Verificar password (scrypt vía AuthFinder)
+    A->>DB: UPDATE users SET last_seen_at = now()
+    A->>DB: INSERT auth_access_tokens (user_id, hash, expires_at)
+    DB-->>A: Token emitido (prefijo oat_, expira en 30 días)
+    A-->>C: 200 { user, token }
+```
+
 ## Workflow con OpenSpec
 
 Flujo spec-driven con Claude Code o Cursor:
 
-```
+```text
 /opsx:propose "añadir endpoint X"   # genera proposal + specs + tasks
 /opsx:apply                          # implementa según las tasks
 /opsx:archive                        # archiva el cambio aplicado
@@ -68,4 +107,3 @@ Flujo spec-driven con Claude Code o Cursor:
 
 La configuración vive en `openspec/config.yaml`. Los comandos y skills se
 instalaron en `.claude/` y `.cursor/`.
-

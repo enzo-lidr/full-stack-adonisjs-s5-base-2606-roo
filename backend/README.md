@@ -22,7 +22,7 @@ API JSON con autenticación por access tokens.
 
 ## Estructura
 
-```
+```text
 app/
 ├── controllers/   NewAccounts, AccessTokens, Profiles, Users, Health
 ├── models/        User (withAuthFinder + DbAccessTokensProvider)
