@@ -1,4 +1,4 @@
-# PRD — FlowSync MVP
+d# PRD — FlowSync MVP
 
 > **Producto**: FlowSync
 > **Versión del documento**: 1.0 · Q3 2026
