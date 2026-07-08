@@ -5,6 +5,9 @@ node_modules
 build
 dist
 
+# TypeDoc generado (regenerar con `npx typedoc`, no se commitea)
+docs/api-reference
+
 # Entorno (NUNCA commitear .env)
 .env
 .env.local

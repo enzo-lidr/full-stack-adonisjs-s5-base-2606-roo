@@ -1,0 +1,6 @@
+# Config de lychee (link checker). Solo excepciones reales de este repo:
+# las URLs de localhost del README/CLAUDE.md (arranque local), inalcanzables desde CI.
+exclude = ["^http://localhost", "^https://localhost"]
+
+timeout = 30
+max_retries = 3

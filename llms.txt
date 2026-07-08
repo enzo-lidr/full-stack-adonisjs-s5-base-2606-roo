@@ -1,0 +1,38 @@
+# full-stack-adonisjs-s5-base
+
+> Starter kit full-stack (AdonisJS 7 + React 19) usado como hilo conductor del
+> máster AI4Devs (LIDR). Implementa solo **autenticación por access tokens y
+> un directorio de usuarios** — no el dominio de tareas ni la sincronización
+> con Google Calendar descritos en `docs/PRD.md`, que todavía no están
+> implementados en este repo.
+
+## Empezar aquí
+
+- [README.md](./README.md): cómo instalar, configurar y arrancar backend +
+  frontend en local; incluye diagramas de arquitectura (Mermaid).
+- [CLAUDE.md](./CLAUDE.md): convenciones de código, qué no hacer, y cuándo usar
+  Context7 MCP para este stack.
+
+## API
+
+- `GET /openapi`: spec OpenAPI 3.0 generada en vivo desde las rutas reales
+  (`adonis-autoswagger`) — fuente de verdad técnica del contrato HTTP.
+- `GET /docs`: la misma spec, en Scalar (UI navegable).
+- [openspec/specs/authentication/spec.md](./openspec/specs/authentication/spec.md):
+  requisitos de negocio de registro/login/logout/perfil, en formato Gherkin.
+- [openspec/specs/users/spec.md](./openspec/specs/users/spec.md): requisitos
+  del directorio de usuarios. **Nota**: documenta `GET /api/v1/users/active`,
+  que a la fecha de este archivo **no está implementado** en
+  `backend/app/controllers/users_controller.ts` — no asumas que existe.
+
+## Decisiones técnicas
+
+- [docs/adr/](./docs/adr/): Architecture Decision Records (formato MADR).
+
+## Optional
+
+- [docs/PRD.md](./docs/PRD.md): visión completa del producto FlowSync
+  (incluye funcionalidad no implementada todavía en este repo — tareas,
+  sincronización con Google Calendar).
+- [entregables/sesion-05/auditoria-y-revision-backlog.md](./entregables/sesion-05/auditoria-y-revision-backlog.md):
+  auditoría del estado real de la documentación de este repo.

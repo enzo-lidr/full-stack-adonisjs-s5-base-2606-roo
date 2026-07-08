@@ -10,6 +10,16 @@ const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   passwordColumnName: 'password',
 })
 
+/**
+ * Cuenta de usuario de FlowSync.
+ *
+ * @remarks El password se hashea con scrypt (`AuthFinder`, uid = `email`) y
+ * nunca se serializa (`serializeAs: null`); la salida pública pasa siempre
+ * por `UserTransformer`, no por este modelo directamente. `lastSeenAt` se
+ * actualiza en cada login exitoso (`AccessTokensController#store`) y es la
+ * base del futuro `GET /api/v1/users/active` (ver
+ * `openspec/specs/users/spec.md`).
+ */
 export default class User extends compose(BaseModel, AuthFinder) {
   @column({ isPrimary: true })
   declare id: number

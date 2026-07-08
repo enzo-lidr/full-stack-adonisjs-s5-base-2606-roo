@@ -1,0 +1,9 @@
+{
+  "entryPoints": ["app/"],
+  "entryPointStrategy": "expand",
+  "out": "docs/api-reference",
+  "excludePrivate": true,
+  "excludeInternal": true,
+  "includeVersion": true,
+  "readme": "none"
+}

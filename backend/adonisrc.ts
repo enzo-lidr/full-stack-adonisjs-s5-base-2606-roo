@@ -29,12 +29,16 @@ export default defineConfig({
   tests: {
     suites: [
       {
-        files: ['tests/unit/**/*.spec(.ts|.js)'],
+        // @japa/runner usa el glob nativo de node:fs/promises, que no
+        // soporta el paréntesis de alternancia (.ts|.js) del template
+        // original (ese patrón es sintaxis de fast-glob) — con él, NINGÚN
+        // test se ejecuta nunca, sin ningún error visible. Ver ADR 0002.
+        files: ['tests/unit/**/*.spec.{ts,js}'],
         name: 'unit',
         timeout: 2000,
       },
       {
-        files: ['tests/functional/**/*.spec(.ts|.js)'],
+        files: ['tests/functional/**/*.spec.{ts,js}'],
         name: 'functional',
         timeout: 30000,
       },
