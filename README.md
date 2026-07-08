@@ -69,3 +69,33 @@ Flujo spec-driven con Claude Code o Cursor:
 La configuración vive en `openspec/config.yaml`. Los comandos y skills se
 instalaron en `.claude/` y `.cursor/`.
 
+## Estructura del proyecto
+
+```mermaid
+graph TB
+  ROOT["full-stack-adonisjs-master/"]
+  ROOT --> BE["backend/ · AdonisJS 7"]
+  ROOT --> FE["frontend/ · React 19 + Vite"]
+  ROOT --> OS["openspec/"]
+  ROOT --> DOCS["docs/"]
+  ROOT --> CFG["CLAUDE.md · README.md · .gitignore · .claude/ · .cursor/"]
+
+  subgraph Backend["Backend — AdonisJS 7"]
+    BE --> BE_APP["app/ (controllers, middleware, models, transformers, validators, exceptions)"]
+    BE --> BE_CFG["config/ (auth, database, cors, ...)"]
+    BE --> BE_DB["database/migrations/"]
+    BE --> BE_START["start/ (routes.ts, kernel.ts, env.ts)"]
+    BE --> BE_BIN["bin/ · tests/"]
+  end
+
+  subgraph Frontend["Frontend — React 19 + Vite"]
+    FE --> FE_SRC["src/ (components, lib, pages, services, types, App.tsx, main.tsx)"]
+    FE --> FE_VITE["vite.config.ts · index.html"]
+  end
+
+  OS --> OS_CFG["config.yaml"]
+  OS --> OS_SPECS["specs/ (authentication, users)"]
+  DOCS --> DOCS_F["PRD.md · Arquitectura.md · auth-flow.md"]
+  DOCS --> DOCS_D["c4/ · adr/"]
+```
+
